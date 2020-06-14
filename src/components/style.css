@@ -1,0 +1,23 @@
+.responsiveDiv {
+    width:"100%";
+    display:"block"; 
+    overflow:'scroll';
+}
+.responsiveDiv .ant-table-content{
+    overflow: scroll;
+}
+.responsiveDiv thead tr th{
+    background-color: darkorange;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+}
+.responsiveDiv .table-row-light {
+    background-color: #f4f5ee;
+}
+.responsiveDiv .table-row-dark {
+    background-color: #dbd6cb;
+}
+.responsiveDiv .ant-table-pagination.ant-pagination {
+    margin:15px 15px;
+}      

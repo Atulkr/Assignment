@@ -1,0 +1,26 @@
+{
+//   "presets": [
+//       [ "env",
+//           {
+//               "modules": false,
+//               "useBuiltIns": "usage"
+//           }
+//       ],
+//       "babel-preset-es2015",
+//       "stage-2",
+//       "stage-0",
+//       "react",
+//       "jest"
+//   ],
+    "presets": ["react", "es2015", "stage-0", "stage-2"],  
+//   "plugins": [
+//     "transform-class-properties"
+//    ],
+  "env": {
+      "test": {
+          "presets": ["react"],
+          "plugins": ["transform-es2015-modules-commonjs"]
+      }
+
+  }
+}
