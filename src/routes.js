@@ -6,4 +6,9 @@ export default [
         component: Home,
         exact: true,
     },
+    {
+        path: "/:page",
+        component: Home,
+        exact: true,
+    },
 ];

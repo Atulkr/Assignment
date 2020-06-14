@@ -20,7 +20,6 @@ export const addUpvote = (id) => {
     if(upVote && upVote.length) {
         upVote.forEach(vote => {
             if(vote.feedId === id) {
-                console.log("_____",vote);
                 vote.voteCount= vote.voteCount + 100;
                 updatedVoteCount= vote.voteCount;
             }
@@ -46,6 +45,7 @@ const createFeedDataSource = (hit, vote= []) => {
     const { objectID: id, num_comments, points: voteCount, title, url, author, created_at }= hit;
     return {
         id,
+        key: id,
         num_comments,
         isHidden: vote.feedId ? vote.isHidden : false,
         voteCount: vote.feedId ? vote.voteCount : voteCount,
@@ -84,7 +84,6 @@ export const furnishData = ( hitsData ) => {
         }
         updatedHits[hit.objectID]=updatedHit;
     });
-    console.log("113333333222211",updatedHits );
     
     if(!isDataOnStorage) {
         setDataOnStorage(upVote);

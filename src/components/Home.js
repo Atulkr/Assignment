@@ -2,12 +2,25 @@ import React from "react";
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import { Table, Row, Col } from 'antd';
+import Loader from './Loader';
 import './style.css'
-import { fetchData, updateFeedVote, toggleVoteHandeler, updateFeedOnClient, saveOnClient, updateFeedHide } from "../actions";
+import { 
+    fetchData, 
+    updateFeedVote, 
+    toggleVoteHandeler, 
+    updateFeedOnClient, 
+    saveOnClient, 
+    updateFeedHide 
+} from "../actions";
 import NewsDetail from './NewsDetail';
 import Upvote from './Upvote';
-import Graph from "./Graph";
-import { addUpvote, furnishData, hideFeedData } from "../utils";
+import Graph from './Graph';
+import { 
+    addUpvote, 
+    furnishData, 
+    hideFeedData 
+} from "../utils";
+
 class Home extends React.Component {
 
     constructor(props) {
@@ -54,6 +67,7 @@ class Home extends React.Component {
                     )}
                 },
             ],
+            storage: false,
         }
         this.handleClickToVote= this.handleClickToVote.bind(this);
         this.toggleVoteHandler= this.toggleVoteHandler.bind(this);
@@ -65,9 +79,13 @@ class Home extends React.Component {
         if ( this.props.feeds.length <= 0 ) {
             this.props.fetchData();
         }
-        const dataOnClient= furnishData(feeds.hits);
-        console.log("######", dataOnClient);
-        this.props.saveOnClient(dataOnClient);
+        const updatedHits= furnishData(feeds.hits);
+        this.props.saveOnClient(updatedHits);
+        if(JSON.parse(window.localStorage.getItem('upVoteData'))) {
+            this.setState({
+                storage: true,
+            })
+        }
     }
 
     handleClickToVote(id) {
@@ -84,18 +102,37 @@ class Home extends React.Component {
         this.props.toggleVoteHandeler();
     }
 
+   
+      
+
     render( ) {
-        const { triggerCoordinateFetch, upVoteData, updatedFeeds } = this.props;
-        const {columns}= this.state;
-        if(typeof window === 'undefined') {
-            return <div>!!!!Loading...</div>
-        }
+        const { triggerCoordinateFetch, updatedFeeds } = this.props;
+        const {columns, storage}= this.state;
+        
         let data= [];
         if(updatedFeeds){
             const dataTobeFiltered= Object.values(updatedFeeds);
             data= dataTobeFiltered.filter(feed => !feed.isHidden);
         }
+        if(typeof window === 'undefined') {
+           return( 
+            <Loader
+                    style={{
+                        display:'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width:' 100%',
+                        height: '100vh',
+                        background: 'rgba(211,211,211, 0.1)',
+                        fontSize: '52px',
+                        fontWeight: '700',
+                        letterSpacing: '25px',
+                    }}
+            />
+           )
+        }
         return (
+            
             <div className="wrapper">
 
                 <div className="responsiveDiv">
@@ -110,12 +147,12 @@ class Home extends React.Component {
                         </Col>
                     </Row>
                 </div>
-                
-                <Graph 
-                    fetch= {triggerCoordinateFetch} 
-                    initVoteData= {upVoteData} 
-                    toggleVoteFlag= {this.toggleVoteHandler}
-                />
+                {storage &&
+                    <Graph 
+                        fetch= {triggerCoordinateFetch} 
+                        toggleVoteFlag= {this.toggleVoteHandler}
+                    />
+                }
             </div>
         );
     }
@@ -125,7 +162,6 @@ Home.serverFetch = fetchData; // static declaration of data requirements
 const mapStateToProps = ( state ) => ( {
     feeds: state.newsFeed.data,
     updatedFeeds: state.newsFeed.refinedFeeds,
-    upVoteData: state.newsFeed.voteData,
     triggerCoordinateFetch: state.newsFeed.voteUpdated,
 });
 

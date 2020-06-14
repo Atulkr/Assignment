@@ -2,11 +2,8 @@ import React, { useState, useEffect } from "react";
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'Recharts';
 
 const Graph = (props) => {
-    
-    const [coordinates, setCount] = useState(
-        JSON.parse(window.localStorage.getItem('upVoteData')) ?
-            JSON.parse(window.localStorage.getItem('upVoteData')).filter(point => !point.isHidden) :
-            []);
+
+    const [coordinates, setCount] = useState(JSON.parse(window.localStorage.getItem('upVoteData')).filter(point => !point.isHidden));
 
     useEffect(() => {
         if(props.fetch && (typeof window !== 'undefined')) {

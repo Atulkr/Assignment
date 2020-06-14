@@ -33,7 +33,6 @@ export const dataReducer = ( state = initialValues, action ) => {
             state = ip.set(state, 'voteUpdated', true);
             return state;
         case "UPDATE_FEEDS_DATA":
-            console.log("88888", action);
             const data= ip.getIn(state, ['refinedFeeds']);
             let dataToUpdate= _cloneDeep(data);
             dataToUpdate[action.data.id].voteCount= action.data.updatedVote;

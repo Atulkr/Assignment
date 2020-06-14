@@ -25,7 +25,7 @@ app.get( "/*", ( req, res ) => {
             .filter( route => matchPath( req.url, route ) ) // filter matching paths
             .map( route => route.component ) // map to components
             .filter( comp => comp.serverFetch ) // check if components have data requirement
-            .map( comp => store.dispatch( comp.serverFetch( ) ) ); // dispatch data requirement
+            .map( comp => store.dispatch( comp.serverFetch( req ) ) ); // dispatch data requirement
 
     Promise.all( dataRequirements ).then( ( ) => {
         const jsx = (
@@ -44,7 +44,7 @@ app.get( "/*", ( req, res ) => {
     } );
 } );
 
-app.listen( 'https://stoic-minsky-fb8c4f.netlify.app/' );
+app.listen(2048);
 
 function htmlTemplate( reactDom, reduxState, helmetData ) {
     return `

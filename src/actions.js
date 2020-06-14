@@ -1,4 +1,4 @@
-import { fetchCircuits } from "./api";
+import { fetchFeeds } from "./api";
 
 const storeData = ( data ) => ( {
     type: "STORE_DATA",
@@ -23,6 +23,8 @@ export const toggleVoteAction = ( ) => ( {
     type: "TOGGLE_VOTE_HANDELER",
 } );
 
+
+
 export const updateFeedVote = ( id, updatedVote ) => dispatch => 
     dispatch( triggerVoteAction({id, updatedVote}) );
 
@@ -35,6 +37,6 @@ export const toggleVoteHandeler = () => dispatch =>
 export const saveOnClient = (data) => dispatch => 
     dispatch(saveOnClientAction(data));
 
-export const fetchData = ( ) => dispatch => 
-    fetchCircuits().then( (res) => {
+export const fetchData = (req) => dispatch => 
+    fetchFeeds(req).then( (res) => {
         dispatch( storeData(res) )});
