@@ -44,7 +44,7 @@ app.get( "/*", ( req, res ) => {
     } );
 } );
 
-app.listen( 3003 );
+app.listen( 'https://stoic-minsky-fb8c4f.netlify.app/' );
 
 function htmlTemplate( reactDom, reduxState, helmetData ) {
     return `
